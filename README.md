@@ -57,3 +57,5 @@ Applications and Benefits
 This task is an excellent example of how to combine API integration, data parsing, and data visualization in a Python project. It demonstrates the ability to automate data collection from online services and present it in a user-friendly format. Such skills are essential in data science, software development, and real-world applications like building dashboards, creating weather apps, or monitoring environmental conditions.
 
 Additionally, this project can be extended in numerous ways—such as adding forecast data, integrating with interactive plotting libraries like Plotly or Dash, or building a web app using frameworks like Flask or Streamlit.
+
+![Image](https://github.com/user-attachments/assets/62d1fd38-c133-431b-9f13-e5ff43b730aa)
