@@ -1,0 +1,43 @@
+import requests
+import matplotlib.pyplot as plt
+from datetime import datetime
+import sys
+
+# Set your OpenWeatherMap API key here
+API_KEY = 'your_api_key_here'  # Replace with your OpenWeatherMap API Key
+CITY = 'London'  # You can modify this to any city
+
+def fetch_weather(city, api_key):
+    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
+    response = requests.get(url)
+    if response.status_code != 200:
+        print("Failed to fetch data:", response.json())
+        sys.exit(1)
+    return response.json()
+
+def visualize_weather(data):
+    main = data['main']
+    weather = data['weather'][0]
+    wind = data['wind']
+    
+    labels = ['Temperature (°C)', 'Feels Like (°C)', 'Humidity (%)', 'Pressure (hPa)', 'Wind Speed (m/s)']
+    values = [main['temp'], main['feels_like'], main['humidity'], main['pressure'], wind['speed']]
+
+    plt.figure(figsize=(10, 6))
+    bars = plt.bar(labels, values, color='skyblue')
+    plt.title(f"Current Weather in {data['name']} ({weather['main']}: {weather['description']})", fontsize=14)
+    plt.ylabel('Values')
+
+    # Add data labels on top of bars
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, yval + 0.5, f"{yval:.1f}", ha='center', va='bottom')
+
+    timestamp = datetime.utcfromtimestamp(data['dt']).strftime('%Y-%m-%d %H:%M:%S UTC')
+    plt.figtext(0.99, 0.01, f"Updated at: {timestamp}", horizontalalignment='right')
+    plt.tight_layout()
+    plt.show()
+
+if __name__ == "__main__":
+    data = fetch_weather(CITY, API_KEY)
+    visualize_weather(data)
